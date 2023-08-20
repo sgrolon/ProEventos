@@ -1,7 +1,68 @@
-<h1>Eventos de Components</h1>
+<h2>Eventos</h2>
+<hr />
 
-
-<div *ngFor="let evento of eventos">
-    <p>O <b>Evento</b> {{evento.tema}} <b>acontecerá</b> em {{evento.local}}</p>
-    <hr>
+<div class="form-inline">
+  <div class="col-md">
+    <label class="me-2">Filtro:</label>
+    <input 
+    type="text" 
+    class="form-control mt-2" 
+    placeholder="Buscar"
+    [(ngModel)]="filtroLista"
+    />
+  </div>
 </div>
+<!--<h3>Filtro: {{filtroLista}}</h3>-->
+<table class="table table-light table-striped mt-2">
+  <thead class="table-dark">
+    <tr>
+      <th scope="col">
+        <button
+          typex="button"
+          class="btn btn-outline-light btn-sm"
+          (click)="alterarImagem()"
+        >
+          {{ !showImg ? "Ocultar" : "Exibir" }}
+        </button>
+      </th>
+      <th scope="col">#</th>
+      <th scope="col">Tema</th>
+      <th scope="col">Local</th>
+      <th scope="col">Data</th>
+      <th scope="col">Qtde Pessoas</th>
+      <th scope="col">Lote</th>
+      <th scope="col">Opções</th>
+    </tr>
+  </thead>
+  <tbody *ngIf="eventos && eventos.length">
+    <tr *ngFor="let evento of eventosFiltrados">
+      <td [collapse]="showImg"
+            [isAnimated]="true">
+          <img
+            src="../assets/{{ evento.imagemURL }}"
+            [style.width.px]="widthImg"
+            [style.margin.px]="marginImg"
+          />
+        </td>
+      <td>{{ evento.eventoId }}</td>
+      <td>{{ evento.tema }}</td>
+      <td>{{ evento.local }}</td>
+      <td>{{ evento.dataEvento }}</td>
+      <td>{{ evento.qtdPessoas }}</td>
+      <td>{{ evento.lote }}</td>
+      <td>
+        <button type="button" class="btn btn-primary btn-sm me-2">Editar</button>
+        <button type="button" class="btn btn-danger btn-sm me-2">Excluir</button>
+      </td>
+    </tr>
+  </tbody>
+  <tfoot *ngIf="eventos && !eventos.length">
+    <tr>
+      <td colspan="8" class="text-center">
+        <h4>Nenhum evento encontrado!</h4>
+      </td>
+    </tr>
+  </tfoot>
+</table>
+
+
